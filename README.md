@@ -117,11 +117,9 @@ Before building the project, ensure the following dependencies are available:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-cd YOUR_REPOSITORY
+git clone https://github.com/dimonp/fishing-assistant.git
+cd assistant
 ```
-
-Replace the repository URL with your GitHub repository address.
 
 ### 2. Install Dependencies
 
