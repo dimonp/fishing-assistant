@@ -77,6 +77,7 @@ The application is organized into several components with distinct responsibilit
 | Component | Responsibility |
 |---|---|
 | `Detector` | Loads the ONNX model, preprocesses images, performs inference, and returns object detections. |
+| `DisplayManager` | Manages monitor information and handles coordinate conversion between physical and logical display points. |
 | `FishingAction` | Implements the fishing state machine and coordinates casting, splash detection, and mouse actions. |
 | `ScreenCapture` | Captures the screen or a selected screen region. |
 | `Controller` | Provides mouse and keyboard input operations. |
@@ -118,7 +119,7 @@ Before building the project, ensure the following dependencies are available:
 
 ```bash
 git clone https://github.com/dimonp/fishing-assistant.git
-cd assistant
+cd fishing-assistant
 ```
 
 ### 2. Install Dependencies
