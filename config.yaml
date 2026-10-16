@@ -1,0 +1,93 @@
+# Object detection model configuration
+model:
+  # Path to the ONNX model file.
+  path: "models/best.onnx"
+
+  # OpenCV backend (cpu, opencl, cuda)
+  backend: "cpu"
+
+  # Object classes in the same order as their class IDs in the model.
+  # Class IDs are assigned by position, starting from 0.
+  classes:
+    - "bobber"  # Class ID 0: fishing bobber.
+    - "splash"  # Class ID 1: water splash indicating a possible fish bite.
+
+  # Input image size used by the object detection model (e.g. 640 means 640x640).
+  input_size: 640
+
+  # Minimum confidence score required to accept a detection.
+  # Valid range: 0.0 to 1.0.
+  confidence_threshold: 0.6
+
+# Screen capture configuration
+capture:
+  # Maximum number of frames processed per second.
+  # Lower values reduce CPU/GPU usage but may make splash detection less responsive.
+  fps_limit: 10
+
+  # Zero-based index of the monitor to capture.
+  # 0 is the first monitor, 1 is the second monitor, and so on.
+  monitor_index: 0
+
+  # Screen capture region, specified in pixels.
+  # Coordinates are relative to the screen coordinate system used by the capture backend.
+  region:
+    # Horizontal position of the top-left corner of the capture region.
+    x: 640
+
+    # Vertical position of the top-left corner of the capture region.
+    y: 0
+
+    # Width of the capture region in pixels.
+    width: 640
+
+    # Height of the capture region in pixels.
+    height: 540
+
+
+# Keyboard shortcuts for controlling the application
+hotkeys:
+  # Open the capture region selection tool.
+  configure_region: "Ctrl+F5"
+
+  # Start automated fishing.
+  start_fishing: "Ctrl+F6"
+
+  # Stop automated fishing.
+  stop_fishing: "Ctrl+F7"
+
+  # Exit the application.
+  quit: "Ctrl+Esc"
+
+
+# Detection preview window configuration
+display:
+  # Enable or disable the detection preview window.
+  show_preview: true
+
+  # Show confidence scores next to detected objects.
+  show_confidence: true
+
+  # Show the current processing frame rate (FPS) in the preview.
+  show_fps: true
+
+  # Title of the detection preview window.
+  window_name: "Detection Preview"
+
+
+# Automated fishing behavior configuration
+fishing:
+  # Minimum delay in milliseconds before attempting the next fishing cast.
+  cast_cooldown_ms: 1500
+
+  # Maximum time in milliseconds to wait for the bobber to appear after casting.
+  # If the bobber is not detected before this timeout, another cast may be attempted.
+  bobber_timeout_ms: 5000
+
+  # Maximum time in milliseconds to wait for a splash after detecting the bobber.
+  # If no splash is detected before this timeout, the fishing state machine may reset.
+  splash_timeout_ms: 30000
+
+  # Keyboard key used to cast the fishing line.
+  # If empty, the application may use mouse right double click action.
+  cast_key: "F10"

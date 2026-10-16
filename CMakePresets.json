@@ -1,0 +1,75 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "core",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build"
+        },
+        {
+            "name": "msbuild-debug",
+            "displayName": "MSBUILD Debug",
+            "description": "Target Windows with the msvc compiler, debug build type",
+            "inherits": "core",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "cl",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "msbuild-release",
+            "displayName": "MSBUILD Release",
+            "description": "Target Windows with the msvc compiler, debug build type",
+            "inherits": "core",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "cl",
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "gcc-debug",
+            "displayName": "GCC Debug",
+            "description": "Target Unix-like OS with the gcc compiler, debug build type",
+            "inherits": "core",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "gcc-release",
+            "displayName": "GCC Release",
+            "description": "Target Unix-like OS with the gcc compiler, debug build type",
+            "inherits": "core",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_BUILD_TYPE": "Release",
+                "QUADTREE_ENABLE_SANITIZERS": "OFF"
+            }
+        },
+        {
+            "name": "clang-debug",
+            "displayName": "Clang Debug",
+            "description": "Target Unix-like OS with the clang compiler, debug build type",
+            "inherits": "core",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "clang-release",
+            "displayName": "Clang Release",
+            "description": "Target Unix-like OS with the clang compiler, debug build type",
+            "inherits": "core",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ]
+}
