@@ -2,7 +2,6 @@
 module;
 
 #include <algorithm>
-#include <cctype>
 #include <cmath>
 #include <exception>
 #include <expected>
