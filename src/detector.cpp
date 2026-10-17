@@ -16,8 +16,6 @@ module;
 #include <vector>
 
 #include <opencv2/core.hpp>
-#include <opencv2/core/cuda.hpp>
-#include <opencv2/core/ocl.hpp>
 #include <opencv2/dnn.hpp>
 #include <opencv2/imgproc.hpp>
 
@@ -60,7 +58,7 @@ public:
             confidence_threshold_ = config.confidence_threshold;
             iou_threshold_ = iou_threshold;
             classes_ = config.classes;
-            backend_ = normalize_backend(config.backend);
+            backend_ = config.backend;
         }
         catch (const cv::Exception& e) {
             return std::unexpected(DetectorError{
@@ -132,28 +130,12 @@ private:
     };
 
     [[nodiscard]]
-    static auto normalize_backend(std::string backend) -> std::string
-    {
-        std::transform(
-            backend.begin(),
-            backend.end(),
-            backend.begin(),
-            [](unsigned char ch) {
-                return static_cast<char>(std::tolower(ch));
-            });
-
-        return backend;
-    }
-
-    [[nodiscard]]
     auto configure_backend(
         cv::dnn::Net& net,
         const std::string& requested_backend
     ) const -> std::expected<void, DetectorError>
     {
-        const auto backend = normalize_backend(requested_backend);
-
-        if (backend == "cpu") {
+        if (backend_ == "cpu") {
             net.setPreferableBackend(
                 cv::dnn::DNN_BACKEND_OPENCV);
 
@@ -163,15 +145,7 @@ private:
             return {};
         }
 
-        if (backend == "opencl") {
-            if (!cv::ocl::haveOpenCL()) {
-                return std::unexpected(DetectorError{
-                    "OpenCL is not available in this OpenCV runtime."
-                });
-            }
-
-            cv::ocl::setUseOpenCL(true);
-
+        if (backend_ == "opencl") {
             net.setPreferableBackend(
                 cv::dnn::DNN_BACKEND_OPENCV);
 
@@ -181,14 +155,7 @@ private:
             return {};
         }
 
-        if (backend == "cuda") {
-            if (cv::cuda::getCudaEnabledDeviceCount() <= 0) {
-                return std::unexpected(DetectorError{
-                    "CUDA is unavailable. Check the OpenCV CUDA "
-                    "build, CUDA runtime and GPU driver."
-                });
-            }
-
+        if (backend_ == "cuda") {
             net.setPreferableBackend(
                 cv::dnn::DNN_BACKEND_CUDA);
 

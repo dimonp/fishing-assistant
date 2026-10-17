@@ -11,6 +11,7 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/core/ocl.hpp>
+#include <opencv2/core/cuda.hpp>
 #include <opencv2/core/utils/logger.hpp>
 
 import app.config;
@@ -352,6 +353,52 @@ void handle_hotkeys(
     return 0;
 }
 
+void checkAndSetupBackend(std::string_view backend)
+{
+    if (backend == "opencl") {
+        std::cout << "=== Checking OpenCV GPU Backends (OpenCL) ===" << std::endl;
+
+        if (!cv::ocl::haveOpenCL()) {
+            throw std::runtime_error{
+                "[-] OpenCL Support: NOT AVAILABLE in this OpenCV runtime."
+            };
+        }
+
+        cv::ocl::setUseOpenCL(true);
+        std::cout << "[+] OpenCL Support: AVAILABLE" << std::endl;
+
+        cv::ocl::Context context = cv::ocl::Context::getDefault();
+        if (context.ndevices() > 0) {
+            cv::ocl::Device device = context.device(0);
+            std::string name = device.name();
+            std::cout << "   -> Active OpenCL Device: " << name << std::endl;
+            std::cout << "   -> OpenCL Driver Version: " << device.driverVersion() << std::endl;
+
+            // Convert device name to lowercase for vendor checking
+            std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+
+            if (name.find("amd") != std::string::npos || name.find("radeonsi") != std::string::npos) {
+                std::cout << "   [!] OpenCL backend is running on an AMD GPU" << std::endl;
+            } else if (name.find("nvidia") != std::string::npos) {
+                std::cout << "   [!] OpenCL backend is running on an NVIDIA GPU" << std::endl;
+            } else {
+                std::cout << "   [!] OpenCL backend is running on an Unknown GPU vendor" << std::endl;
+            }
+        } else {
+            std::cout << "   [-] OpenCL devices were found but are not available (falling back to CPU)." << std::endl;
+        }
+    } else if (backend == "cuda") {
+        if (cv::cuda::getCudaEnabledDeviceCount() <= 0) {
+            throw std::runtime_error{
+                "CUDA is unavailable. Check the OpenCV CUDA "
+                "build, CUDA runtime and GPU driver."
+            };
+        }
+    } else {
+        return;
+    }
+}
+
 } // namespace
 
 auto main() -> int
@@ -375,7 +422,8 @@ auto main() -> int
             return 1;
         }
 
-       cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_WARNING);
+        cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_WARNING);
+        checkAndSetupBackend(config.model.backend);
 
         return run_application(config, context);
     } catch (const std::exception& error) {

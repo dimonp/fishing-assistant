@@ -46,8 +46,7 @@
             "inherits": "core",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "g++",
-                "CMAKE_BUILD_TYPE": "Release",
-                "QUADTREE_ENABLE_SANITIZERS": "OFF"
+                "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
