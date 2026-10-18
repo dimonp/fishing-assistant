@@ -1,11 +1,9 @@
 #include <algorithm>
 #include <chrono>
-#include <cmath>
 #include <exception>
 #include <iostream>
 #include <string>
 #include <thread>
-#include <vector>
 
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
@@ -23,61 +21,9 @@ import app.screen_capture;
 import app.region_selector;
 import app.fishing_action;
 import app.controller;
-
+import app.preview;
 namespace
 {
-
-[[nodiscard]] auto get_class_name(
-    const std::vector<std::string>& classes,
-    const int class_id
-) -> std::string
-{
-    if (class_id < 0 ||
-        static_cast<std::size_t>(class_id) >= classes.size()) {
-        return "class_" + std::to_string(class_id);
-    }
-
-    return classes[static_cast<std::size_t>(class_id)];
-}
-
-void draw_detections(
-    cv::Mat& frame,
-    const std::vector<app::Detection>& detections,
-    const std::vector<std::string>& classes,
-    const bool show_confidence
-)
-{
-    for (const auto& detection : detections) {
-        const cv::Rect box{
-            static_cast<int>(std::lround(detection.box.x)),
-            static_cast<int>(std::lround(detection.box.y)),
-            static_cast<int>(std::lround(detection.box.width)),
-            static_cast<int>(std::lround(detection.box.height))
-        };
-
-        cv::rectangle(frame, box, cv::Scalar{0, 255, 0}, 2);
-
-        std::string label =
-            get_class_name(classes, detection.class_id);
-
-        if (show_confidence) {
-            label += " " + std::to_string(detection.confidence).substr(0, 4);
-        }
-
-        const int text_y = std::max(20, box.y - 8);
-
-        cv::putText(
-            frame,
-            label,
-            {box.x, text_y},
-            cv::FONT_HERSHEY_SIMPLEX,
-            0.6,
-            cv::Scalar{0, 255, 0},
-            2,
-            cv::LINE_AA
-        );
-    }
-}
 
 void handle_hotkeys(
     app::HotkeyListener& hotkeys,
@@ -144,8 +90,9 @@ void handle_hotkeys(
     app::ScreenCapture& screen,
     app::Detector& detector,
     app::FishingAction& fishing_action,
+    app::Preview& preview,
     const app::AppConfig& config,
-    double fps
+    const double fps
 ) -> bool
 {
     auto frame = screen.capture();
@@ -163,32 +110,12 @@ void handle_hotkeys(
         return false;
     }
 
-    if (config.display.show_preview) {
-        draw_detections(
-            frame,
-            *detections_result,
-            config.model.classes,
-            config.display.show_confidence
-        );
-
-        if (config.display.show_fps) {
-            const std::string fps_label =
-                "FPS: " + std::to_string(static_cast<int>(std::lround(fps)));
-
-            cv::putText(
-                frame,
-                fps_label,
-                {10, 30},
-                cv::FONT_HERSHEY_SIMPLEX,
-                0.8,
-                cv::Scalar{0, 255, 255},
-                2,
-                cv::LINE_AA
-            );
-        }
-
-        cv::imshow(config.display.window_name, frame);
-    }
+    preview.render(
+        frame,
+        *detections_result,
+        config.model.classes,
+        fps
+    );
 
     auto fishing_result = fishing_action.process(*detections_result);
 
@@ -250,6 +177,8 @@ void handle_hotkeys(
     app::Controller mouse{context};
     app::FishingAction fishing{mouse, display, config.fishing};
 
+    app::Preview preview{config.display};
+
     fishing.set_region_origin(config.capture.x, config.capture.y);
 
     bool running = false;
@@ -272,10 +201,6 @@ void handle_hotkeys(
               << " to configure the capture region, "
               << config.hotkeys.quit << " to quit.\n";
 
-    if (config.display.show_preview) {
-        cv::namedWindow(config.display.window_name, cv::WINDOW_NORMAL);
-    }
-
     auto previous_frame_time = std::chrono::steady_clock::now();
     double current_fps = 0.0;
 
@@ -294,9 +219,7 @@ void handle_hotkeys(
             next_frame
         );
 
-        if (config.display.show_preview) {
-            cv::waitKey(1);
-        }
+        preview.poll_events();
 
         if (!running) {
             std::this_thread::sleep_for(
@@ -323,22 +246,23 @@ void handle_hotkeys(
                 frame_start - previous_frame_time
             ).count();
 
-            if (elapsed > 0.0) {
-                current_fps = 1.0 / elapsed;
-            }
+        if (elapsed > 0.0) {
+            current_fps = 1.0 / elapsed;
+        }
 
-            previous_frame_time = frame_start;
+        previous_frame_time = frame_start;
 
-            if (!process_frame(
-                screen,
-                detector,
-                fishing,
-                config,
-                current_fps
-            )) {
-                running = false;
-                continue;
-            }
+        if (!process_frame(
+            screen,
+            detector,
+            fishing,
+            preview,
+            config,
+            current_fps
+        )) {
+            running = false;
+            continue;
+        }
 
         if (frame_interval >
             std::chrono::steady_clock::duration::zero()) {
@@ -348,7 +272,6 @@ void handle_hotkeys(
     }
 
     hotkeys.stop();
-    cv::destroyAllWindows();
 
     return 0;
 }

@@ -56,6 +56,7 @@ target_sources(fishing_assistant
         src/region_selector.cpp
         src/screen_capture.cpp
         src/fishing_action.cpp
+        src/preview.cpp
 
     PRIVATE
         FILE_SET CXX_MODULES
@@ -70,6 +71,7 @@ target_sources(fishing_assistant
             src/screen_capture.cppm
             src/controller.cppm
             src/fishing_action.cppm
+            src/preview.cppm
 )
 
 target_compile_features(fishing_assistant PRIVATE cxx_std_23)
