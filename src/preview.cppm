@@ -1,6 +1,7 @@
 module;
 
 #include <string>
+#include <string_view>
 #include <vector>
 
 #include <opencv2/core.hpp>
@@ -17,6 +18,7 @@ class Preview
 {
 public:
     explicit Preview(const DisplayConfig& config);
+
     ~Preview();
 
     Preview(const Preview&) = delete;
@@ -30,6 +32,11 @@ public:
         const std::vector<Detection>& detections,
         const std::vector<std::string>& classes,
         double fps
+    );
+
+    void render_stopped(
+        cv::Mat& frame,
+        const std::string_view hint
     );
 
     void poll_events();

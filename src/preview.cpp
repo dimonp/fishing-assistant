@@ -95,7 +95,6 @@ void draw_fps(cv::Mat& frame, const double fps)
 
 } // namespace
 
-
 Preview::Preview(const DisplayConfig& config)
     : enabled_{config.show_preview}
     , config_{config}
@@ -134,6 +133,87 @@ void Preview::render(
     if (config_.show_fps) {
         draw_fps(frame, fps);
     }
+
+    cv::imshow(config_.window_name, frame);
+}
+
+void Preview::render_stopped(
+    cv::Mat& frame,
+    const std::string_view hint
+)
+{
+    if (hint.empty() || frame.empty()) {
+        return;
+    }
+
+    constexpr int margin = 10;
+    constexpr int padding = 8;
+    constexpr double font_scale = 0.6;
+    constexpr int thickness = 2;
+
+    const std::string text{hint};
+
+    int baseline = 0;
+    const cv::Size text_size = cv::getTextSize(
+        text,
+        cv::FONT_HERSHEY_SIMPLEX,
+        font_scale,
+        thickness,
+        &baseline
+    );
+
+    const int panel_width = std::min(
+        frame.cols,
+        text_size.width + padding * 2
+    );
+
+    const int panel_height = std::min(
+        frame.rows,
+        text_size.height + baseline + padding * 2
+    );
+
+    const int x = margin;
+    const int y = std::max(
+        0,
+        frame.rows - panel_height - margin
+    );
+
+    const int width = std::min(
+        panel_width,
+        frame.cols - x
+    );
+
+    if (width <= 0 || panel_height <= 0) {
+        return;
+    }
+
+    cv::rectangle(
+        frame,
+        cv::Rect{x, y, width, panel_height},
+        cv::Scalar{0, 0, 0},
+        cv::FILLED
+    );
+
+    const int text_x = x + padding;
+    const int text_y = std::min(
+        frame.rows - baseline,
+        y + padding + text_size.height
+    );
+
+    if (text_x >= frame.cols || text_y <= 0) {
+        return;
+    }
+
+    cv::putText(
+        frame,
+        text,
+        {text_x, text_y},
+        cv::FONT_HERSHEY_SIMPLEX,
+        font_scale,
+        cv::Scalar{0, 255, 255},
+        thickness,
+        cv::LINE_AA
+    );
 
     cv::imshow(config_.window_name, frame);
 }

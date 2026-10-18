@@ -194,12 +194,13 @@ void handle_hotkeys(
 
     auto next_frame = std::chrono::steady_clock::now();
 
-    std::cout << "Ready. Press "
-              << config.hotkeys.start_fishing << " to start fishing, "
-              << config.hotkeys.stop_fishing << " to stop fishing, "
-              << config.hotkeys.configure_region
-              << " to configure the capture region, "
-              << config.hotkeys.quit << " to quit.\n";
+    const std::string hint =
+        "Ready. Press " + config.hotkeys.start_fishing + " to start fishing,\n"
+        "      " + config.hotkeys.stop_fishing + " to stop fishing,\n"
+        "      " + config.hotkeys.configure_region + " to configure the capture region,\n"
+        "      " + config.hotkeys.quit + " to quit.";
+
+    std::cout << hint << '\n';
 
     auto previous_frame_time = std::chrono::steady_clock::now();
     double current_fps = 0.0;
@@ -219,17 +220,24 @@ void handle_hotkeys(
             next_frame
         );
 
-        preview.poll_events();
-
         if (!running) {
+            auto frame = screen.capture();
+
+            if (!frame.empty()) {
+                preview.render_stopped(frame, hint);
+            }
+
+            preview.poll_events();
+
             std::this_thread::sleep_for(
                 std::chrono::milliseconds{10}
             );
             continue;
         }
 
-        const auto now = std::chrono::steady_clock::now();
+        preview.poll_events();
 
+        const auto now = std::chrono::steady_clock::now();
         if (frame_interval >
                 std::chrono::steady_clock::duration::zero() &&
             now < next_frame) {
