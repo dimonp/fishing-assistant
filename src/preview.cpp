@@ -11,11 +11,9 @@ module;
 
 module app.preview;
 
-namespace app
-{
+namespace app {
 
-namespace
-{
+namespace {
 
 [[nodiscard]] auto get_class_name(
     const std::vector<std::string>& classes,
@@ -224,4 +222,5 @@ void Preview::poll_events()
         cv::waitKey(1);
     }
 }
+
 } // namespace app

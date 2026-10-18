@@ -9,19 +9,16 @@ export module app.screen_capture;
 import app.robot_context;
 import app.display_manager;
 
-export namespace app
-{
+export namespace app {
 
-struct CaptureRegion
-{
+struct CaptureRegion {
     int x{};
     int y{};
     int width{};
     int height{};
 };
 
-class ScreenCapture
-{
+class ScreenCapture {
 public:
     ScreenCapture(
         RobotContext& context,

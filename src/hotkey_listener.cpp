@@ -53,8 +53,7 @@ constexpr std::size_t key_state_count = 256;
 
 } // namespace
 
-class app::HotkeyListener::Impl
-{
+class app::HotkeyListener::Impl {
 public:
     Impl(
         RobotContext& context,

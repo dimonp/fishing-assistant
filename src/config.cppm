@@ -8,8 +8,8 @@ module;
 
 export module app.config;
 
-export namespace app
-{
+export namespace app {
+
     struct DisplayConfig {
         bool show_preview = true;
         bool show_confidence = true;
@@ -61,4 +61,5 @@ export namespace app
     ) -> AppConfig;
 
     void validate(const AppConfig& config);
+
 } // namespace app

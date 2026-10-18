@@ -13,11 +13,9 @@ module app.screen_capture;
 
 import app.display_manager;
 
-namespace app
-{
+namespace app {
 
-namespace
-{
+namespace {
 
 [[nodiscard]]
 auto to_cv_mat(const robot::Image& image) -> cv::Mat
@@ -91,8 +89,7 @@ auto make_physical_rect(
 
 } // namespace
 
-class ScreenCapture::Impl
-{
+class ScreenCapture::Impl {
 public:
     Impl(
         RobotContext& context,

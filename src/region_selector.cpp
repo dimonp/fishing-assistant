@@ -8,8 +8,7 @@ module;
 
 module app.region_selector;
 
-namespace app
-{
+namespace app {
 
 auto select_capture_region(ScreenCapture& screen) -> CaptureRegion
 {

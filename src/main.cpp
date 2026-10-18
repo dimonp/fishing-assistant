@@ -22,8 +22,8 @@ import app.region_selector;
 import app.fishing_action;
 import app.controller;
 import app.preview;
-namespace
-{
+
+namespace {
 
 void handle_hotkeys(
     app::HotkeyListener& hotkeys,

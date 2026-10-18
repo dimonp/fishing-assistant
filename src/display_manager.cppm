@@ -6,23 +6,19 @@ export module app.display_manager;
 
 import app.robot_context;
 
-export namespace app
-{
+export namespace app {
 
-struct PhysicalPoint
-{
+struct PhysicalPoint {
     int x{};
     int y{};
 };
 
-struct LogicalPoint
-{
+struct LogicalPoint {
     double x{};
     double y{};
 };
 
-struct DisplayInfo
-{
+struct DisplayInfo {
     int index{};
 
     int physical_x{};
@@ -35,8 +31,7 @@ struct DisplayInfo
     double scale_factor{1.0};
 };
 
-class DisplayManager
-{
+class DisplayManager {
 public:
     DisplayManager(RobotContext& context, int monitor_index);
     ~DisplayManager();

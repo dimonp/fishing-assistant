@@ -8,11 +8,9 @@ module;
 
 module app.display_manager;
 
-namespace app
-{
+namespace app {
 
-class DisplayManager::Impl
-{
+class DisplayManager::Impl {
 public:
     Impl(RobotContext& context, int monitor_index)
         : session{context.session()}

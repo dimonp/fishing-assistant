@@ -11,11 +11,9 @@ export module app.preview;
 import app.config;
 import app.detector;
 
-export namespace app
-{
+export namespace app {
 
-class Preview
-{
+class Preview {
 public:
     explicit Preview(const DisplayConfig& config);
 
