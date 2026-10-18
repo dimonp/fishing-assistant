@@ -2,7 +2,7 @@ module;
 
 #include <memory>
 
-export module app.display;
+export module app.display_manager;
 
 import app.robot_context;
 

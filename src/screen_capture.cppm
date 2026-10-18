@@ -7,7 +7,7 @@ module;
 export module app.screen_capture;
 
 import app.robot_context;
-import app.display;
+import app.display_manager;
 
 export namespace app
 {

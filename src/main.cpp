@@ -15,7 +15,7 @@
 import app.config;
 import app.detector;
 import app.hotkeys;
-import app.display;
+import app.display_manager;
 import app.robot_context;
 import app.screen_capture;
 import app.region_selector;

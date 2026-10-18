@@ -11,7 +11,7 @@ module;
 
 module app.screen_capture;
 
-import app.display;
+import app.display_manager;
 
 namespace app
 {

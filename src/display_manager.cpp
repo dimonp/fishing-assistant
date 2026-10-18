@@ -6,7 +6,7 @@ module;
 
 #include <robot/Robot.h>
 
-module app.display;
+module app.display_manager;
 
 namespace app
 {

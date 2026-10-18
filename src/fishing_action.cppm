@@ -7,7 +7,7 @@ module;
 
 export module app.fishing_action;
 
-import app.display;
+import app.display_manager;
 import app.controller;
 import app.config;
 import app.detector;
