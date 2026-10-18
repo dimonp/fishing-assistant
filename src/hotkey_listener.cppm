@@ -4,7 +4,7 @@ module;
 #include <memory>
 #include <optional>
 
-export module app.hotkeys;
+export module app.hotkey_listener;
 
 import app.robot_context;
 import app.config;

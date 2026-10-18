@@ -49,7 +49,7 @@ target_sources(fishing_assistant
         src/main.cpp
         src/config.cpp
         src/key_parser.cpp
-        src/hotkeys.cpp
+        src/hotkey_listener.cpp
         src/display_manager.cpp
         src/detector.cpp
         src/robot_context.cpp
@@ -63,7 +63,7 @@ target_sources(fishing_assistant
         FILES
             src/config.cppm
             src/key_parser.cppm
-            src/hotkeys.cppm
+            src/hotkey_listener.cppm
             src/display_manager.cppm
             src/detector.cppm
             src/robot_context.cppm

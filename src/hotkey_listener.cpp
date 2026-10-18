@@ -1,4 +1,3 @@
-
 module;
 
 #include <algorithm>
@@ -16,7 +15,7 @@ module;
 
 #include <robot/Robot.h>
 
-module app.hotkeys;
+module app.hotkey_listener;
 
 import app.key_parser;
 
