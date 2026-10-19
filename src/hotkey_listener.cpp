@@ -23,7 +23,8 @@ namespace {
 
 constexpr std::size_t key_state_count = 256;
 
-[[nodiscard]] auto modifier_for_key(
+[[nodiscard]]
+auto modifier_for_key(
     robot::Key key
 ) -> app::ModifierMask
 {
@@ -94,7 +95,8 @@ public:
         stop();
     }
 
-    [[nodiscard]] auto start() -> bool
+    [[nodiscard]]
+    auto start() -> bool
     {
         std::lock_guard lifecycle_lock{lifecycle_mutex_};
 
@@ -178,7 +180,8 @@ public:
         }
     }
 
-    [[nodiscard]] auto poll_action() noexcept
+    [[nodiscard]]
+    auto poll_action() noexcept
         -> std::optional<HotkeyAction>
     {
         std::lock_guard lock{mutex_};
@@ -202,7 +205,8 @@ private:
 
     static constexpr std::size_t max_actions = 16;
 
-    [[nodiscard]] auto current_modifiers() const
+    [[nodiscard]]
+    auto current_modifiers() const
         -> ModifierMask
     {
         ModifierMask result{};

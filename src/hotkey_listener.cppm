@@ -28,10 +28,12 @@ public:
     HotkeyListener(const HotkeyListener&) = delete;
     auto operator=(const HotkeyListener&) -> HotkeyListener& = delete;
 
-    [[nodiscard]] auto start() -> bool;
+    [[nodiscard]]
+    auto start() -> bool;
     void stop() noexcept;
 
-    [[nodiscard]] auto poll_action() noexcept
+    [[nodiscard]]
+    auto poll_action() noexcept
         -> std::optional<HotkeyAction>;
 
 private:

@@ -11,7 +11,8 @@ export namespace app {
 
 class RobotContext {
 public:
-    [[nodiscard]] static auto create()
+    [[nodiscard]]
+    static auto create()
         -> std::expected<RobotContext, robot::Error>;
 
     RobotContext(RobotContext&&) noexcept = default;
@@ -20,7 +21,8 @@ public:
     RobotContext(const RobotContext&) = delete;
     auto operator=(const RobotContext&) -> RobotContext& = delete;
 
-    [[nodiscard]] auto session() noexcept -> robot::Session& {
+    [[nodiscard]]
+    auto session() noexcept -> robot::Session& {
         return *session_;
     }
 

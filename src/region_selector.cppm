@@ -4,7 +4,8 @@ import app.screen_capture;
 
 export namespace app {
 
-[[nodiscard]] auto select_capture_region(
+[[nodiscard]]
+auto select_capture_region(
     ScreenCapture& screen
 ) -> CaptureRegion;
 

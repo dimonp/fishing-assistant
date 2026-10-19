@@ -86,7 +86,8 @@ void handle_hotkeys(
     }
 }
 
-[[nodiscard]] auto process_frame(
+[[nodiscard]]
+auto process_frame(
     app::ScreenCapture& screen,
     app::Detector& detector,
     app::FishingAction& fishing_action,
@@ -127,7 +128,8 @@ void handle_hotkeys(
     return true;
 }
 
-[[nodiscard]] auto initialize_detector(
+[[nodiscard]]
+auto initialize_detector(
     app::Detector& detector,
     const auto& config
 ) -> bool
@@ -143,7 +145,8 @@ void handle_hotkeys(
     return true;
 }
 
-[[nodiscard]] auto run_application(
+[[nodiscard]]
+auto run_application(
     const auto& config,
     app::RobotContext& context
 ) -> int

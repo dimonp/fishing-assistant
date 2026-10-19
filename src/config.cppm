@@ -56,7 +56,8 @@ export namespace app {
         FishingConfig fishing;
     };
 
-    [[nodiscard]] auto load_config(
+    [[nodiscard]]
+    auto load_config(
         const std::string& path
     ) -> AppConfig;
 

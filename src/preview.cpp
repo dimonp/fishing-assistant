@@ -15,7 +15,8 @@ namespace app {
 
 namespace {
 
-[[nodiscard]] auto get_class_name(
+[[nodiscard]]
+auto get_class_name(
     const std::vector<std::string>& classes,
     const int class_id
 ) -> std::string
