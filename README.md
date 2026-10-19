@@ -4,6 +4,10 @@ An AI-powered fishing automation bot for **World of Warcraft**, written in moder
 
 The project uses a computer vision pipeline to analyze captured game frames, detect fishing-related objects, and execute fishing actions based on their positions and the current state of the fishing process.
 
+## Security & Anti-Cheat Compliance
+
+The project operates strictly externally. It does not use any low-level process injection, memory reading/writing, or hook mechanisms that could interfere with other processes or trigger antivirus and anti-cheat software software flags. All interactions are handled purely via standard screen capture and simulated OS-level input.
+
 ## Screenshots
 
 | ![Screenshot](screenshots/Screenshot1.png) | ![Screenshot](screenshots/Screenshot0.png) |
