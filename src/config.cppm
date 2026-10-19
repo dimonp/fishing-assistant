@@ -10,8 +10,8 @@ export module app.config;
 
 export namespace app {
 
-    struct DisplayConfig {
-        bool show_preview = true;
+    struct PreviewConfig {
+        bool enabled = true;
         bool show_confidence = true;
         bool show_fps = true;
         std::string window_name = "Detection Preview";
@@ -50,7 +50,7 @@ export namespace app {
 
     struct AppConfig {
         ModelConfig model;
-        DisplayConfig display;
+        PreviewConfig preview;
         HotkeysConfig hotkeys;
         CaptureConfig capture;
         FishingConfig fishing;

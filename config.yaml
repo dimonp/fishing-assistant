@@ -61,9 +61,9 @@ hotkeys:
 
 
 # Detection preview window configuration
-display:
+preview:
   # Enable or disable the detection preview window.
-  show_preview: true
+  enabled: true
 
   # Show confidence scores next to detected objects.
   show_confidence: true

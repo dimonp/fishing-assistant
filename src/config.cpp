@@ -146,22 +146,22 @@ auto app::load_config(
         }
     }
 
-    if (const auto display = root["display"]; display) {
-        config.display.show_preview =
-            display["show_preview"].as<bool>(
-                config.display.show_preview);
+    if (const auto preview = root["preview"]; preview) {
+        config.preview.enabled =
+            preview["show_preview"].as<bool>(
+                config.preview.enabled);
 
-        config.display.show_confidence =
-            display["show_confidence"].as<bool>(
-                config.display.show_confidence);
+        config.preview.show_confidence =
+            preview["show_confidence"].as<bool>(
+                config.preview.show_confidence);
 
-        config.display.show_fps =
-            display["show_fps"].as<bool>(
-                config.display.show_fps);
+        config.preview.show_fps =
+            preview["show_fps"].as<bool>(
+                config.preview.show_fps);
 
-        config.display.window_name =
-            display["window_name"].as<std::string>(
-                config.display.window_name);
+        config.preview.window_name =
+            preview["window_name"].as<std::string>(
+                config.preview.window_name);
     }
 
     if (const auto hotkeys = root["hotkeys"]; hotkeys) {

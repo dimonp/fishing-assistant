@@ -93,8 +93,8 @@ void draw_fps(cv::Mat& frame, const double fps)
 
 } // namespace
 
-Preview::Preview(const DisplayConfig& config)
-    : enabled_{config.show_preview}
+Preview::Preview(const PreviewConfig& config)
+    : enabled_{config.enabled}
     , config_{config}
 {
     if (enabled_) {

@@ -160,7 +160,7 @@ The configuration covers the following areas:
 | `capture` | Monitor selection, capture coordinates, region dimensions, and FPS limit. |
 | `fishing` | Splash and bobber timeouts, casting cooldown, and optional cast key. |
 | `hotkeys` | Keyboard shortcuts for controlling the bot. |
-| `display` | Preview window, confidence labels, FPS display, and window name. |
+| `preview` | Preview window, confidence labels, FPS display, and window name. |
 
 The exact YAML keys and defaults should match the project's configuration parser.
 
@@ -199,8 +199,8 @@ hotkeys:
   configure_region: "F8"
   quit: "ESC"
 
-display:
-  show_preview: true
+preview:
+  enabled: true
   show_confidence: true
   show_fps: true
   window_name: "WoW AI Fishing Bot"

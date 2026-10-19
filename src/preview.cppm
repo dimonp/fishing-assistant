@@ -15,7 +15,7 @@ export namespace app {
 
 class Preview {
 public:
-    explicit Preview(const DisplayConfig& config);
+    explicit Preview(const PreviewConfig& config);
 
     ~Preview();
 
@@ -41,7 +41,7 @@ public:
 
 private:
     bool enabled_{false};
-    DisplayConfig config_;
+    PreviewConfig config_;
 };
 
 } // namespace app

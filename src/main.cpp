@@ -177,7 +177,7 @@ void handle_hotkeys(
     app::Controller mouse{context};
     app::FishingAction fishing{mouse, display, config.fishing};
 
-    app::Preview preview{config.display};
+    app::Preview preview{config.preview};
 
     fishing.set_region_origin(config.capture.x, config.capture.y);
 
